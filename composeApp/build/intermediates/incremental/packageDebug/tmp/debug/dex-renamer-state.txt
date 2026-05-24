@@ -1,4 +1,4 @@
-#Sun May 24 09:41:33 CEST 2026
+#Sun May 24 09:48:08 CEST 2026
 base.0=/Users/gonzalo/AndroidStudioProjects/InifiniteSudoku/composeApp/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/Users/gonzalo/AndroidStudioProjects/InifiniteSudoku/composeApp/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.2=/Users/gonzalo/AndroidStudioProjects/InifiniteSudoku/composeApp/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex
@@ -7,6 +7,7 @@ base.4=/Users/gonzalo/AndroidStudioProjects/InifiniteSudoku/composeApp/build/int
 base.5=/Users/gonzalo/AndroidStudioProjects/InifiniteSudoku/composeApp/build/intermediates/dex/debug/mergeProjectDexDebug/7/classes.dex
 base.6=/Users/gonzalo/AndroidStudioProjects/InifiniteSudoku/composeApp/build/intermediates/dex/debug/mergeProjectDexDebug/8/classes.dex
 base.7=/Users/gonzalo/AndroidStudioProjects/InifiniteSudoku/composeApp/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
+base.8=/Users/gonzalo/AndroidStudioProjects/InifiniteSudoku/composeApp/build/intermediates/dex/debug/mergeProjectDexDebug/12/classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.2=3/classes.dex
@@ -15,6 +16,7 @@ path.4=5/classes.dex
 path.5=7/classes.dex
 path.6=8/classes.dex
 path.7=classes2.dex
+path.8=12/classes.dex
 renamed.0=classes.dex
 renamed.1=classes2.dex
 renamed.2=classes3.dex
@@ -23,3 +25,4 @@ renamed.4=classes5.dex
 renamed.5=classes6.dex
 renamed.6=classes7.dex
 renamed.7=classes8.dex
+renamed.8=classes9.dex

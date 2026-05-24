@@ -1,5 +1,8 @@
 package com.infinitesudoku.app
 
+import com.infinitesudoku.feature.game.GameReducer
+import com.infinitesudoku.feature.game.GameViewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 /**
@@ -20,7 +23,8 @@ val engineModule = module {
  * Game feature module providing game-related ViewModels.
  */
 val gameModule = module {
-    // GameViewModel will be added here
+    single { GameReducer() }
+    viewModel { GameViewModel(get()) }
 }
 
 /**

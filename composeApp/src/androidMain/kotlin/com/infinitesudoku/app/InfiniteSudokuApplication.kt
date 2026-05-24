@@ -11,7 +11,7 @@ class InfiniteSudokuApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@InfiniteSudokuApplication)
-            modules(appModule)
+            modules(allModules)  // Load all modules including gameModule
         }
     }
 }

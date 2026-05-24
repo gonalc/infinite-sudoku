@@ -10,15 +10,20 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.infinitesudoku.core.util.TestPuzzles
 import com.infinitesudoku.feature.game.GameIntent
 import com.infinitesudoku.feature.game.GameViewModel
+import com.infinitesudoku.ui.components.ActionButtonsRow
+import com.infinitesudoku.ui.components.NumberPad
 import com.infinitesudoku.ui.components.SudokuBoard
+import com.infinitesudoku.ui.components.calculateNumberCounts
 import com.infinitesudoku.ui.theme.InfiniteSudokuTheme
+import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun App() {
-    InfiniteSudokuTheme {
-        val viewModel: GameViewModel = koinViewModel()
-        val state by viewModel.state.collectAsStateWithLifecycle()
+    KoinContext {
+        InfiniteSudokuTheme {
+            val viewModel: GameViewModel = koinViewModel()
+            val state by viewModel.state.collectAsStateWithLifecycle()
 
         // Load test puzzle on first composition
         LaunchedEffect(Unit) {
@@ -52,27 +57,57 @@ fun App() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Sudoku Board
-                SudokuBoard(
-                    cells = state.currentBoard.toList(),
-                    selectedCell = state.selectedCell,
-                    highlightedNumber = state.highlightedNumber,
-                    onCellClick = { index ->
-                        viewModel.dispatch(GameIntent.SelectCell(index))
-                    },
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
-                )
+                // Only render game UI when board is loaded
+                if (state.currentBoard.isNotEmpty()) {
+                    // Sudoku Board (takes available space)
+                    SudokuBoard(
+                        cells = state.currentBoard.toList(),
+                        selectedCell = state.selectedCell,
+                        highlightedNumber = state.highlightedNumber,
+                        onCellClick = { index ->
+                            viewModel.dispatch(GameIntent.SelectCell(index))
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth()
+                    )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                // Debug info
-                Text(
-                    text = "Selected: ${state.selectedCell?.value ?: "None"}",
-                    style = MaterialTheme.typography.bodySmall
-                )
+                    // Action buttons (undo, redo, pencil, delete)
+                    ActionButtonsRow(
+                        onUndoClick = { viewModel.dispatch(GameIntent.Undo) },
+                        onRedoClick = { viewModel.dispatch(GameIntent.Redo) },
+                        onDeleteClick = { viewModel.dispatch(GameIntent.ClearCell) },
+                        onPencilToggle = { viewModel.dispatch(GameIntent.TogglePencilMode) },
+                        pencilMode = state.pencilMode,
+                        canUndo = state.undoStack.isNotEmpty(),
+                        canRedo = state.redoStack.isNotEmpty()
+                    )
+
+                    // Number pad
+                    NumberPad(
+                        onNumberClick = { number ->
+                            viewModel.dispatch(GameIntent.PlaceNumber(number))
+                        },
+                        selectedNumber = state.highlightedNumber,
+                        numberCounts = calculateNumberCounts(state.currentBoard),
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                } else {
+                    // Loading state
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
             }
         }
+    }
     }
 }
